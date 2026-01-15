@@ -341,9 +341,9 @@ desired effect
      <li class="<?php if($_GET['p']=="Input-Data-ERP"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputDataERP"><i class="fa fa-calendar"></i> <span>Input-Data-ERP</span></a></li>
 	   <li class="<?php if($_GET['p']=="Input-Data-KR-ERP"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputDataKRERP"><i class="fa fa-calendar"></i> <span>Input-Data-KR-ERP</span></a></li>
 	   <li class="<?php if($_GET['p']=="Input-Data-DYE-ERP"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputDataDYEERP"><i class="fa fa-calendar"></i> <span>Input-Data-DYE-ERP</span></a></li>
-<!-- <li class="<?php if($_GET['p']=="Input-Data3"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputData3"><i class="fa fa-calendar"></i> <span>Input-Data3</span></a></li> 	   
+<li class="<?php if($_GET['p']=="Input-Data3"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputData3"><i class="fa fa-calendar"></i> <span>Input-Data3</span></a></li> 	   
 <li class="<?php if($_GET['p']=="Input-Data-DYE3"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputDataDYE3"><i class="fa fa-calendar"></i> <span>Input-Data-DYE3</span></a></li>	   
-<li class="<?php if($_GET['p']=="Input-Data-KR3"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputDataKR3"><i class="fa fa-calendar"></i> <span>Input-Data-KR3</span></a></li> -->
+<li class="<?php if($_GET['p']=="Input-Data-KR3"){echo"active";} ?> <?php if($_SESSION['akses1']=="biasa"){echo "hidden";} ?>"><a href="InputDataKR3"><i class="fa fa-calendar"></i> <span>Input-Data-KR3</span></a></li>
 </ul>
         </li>
 		 <?php } ?>

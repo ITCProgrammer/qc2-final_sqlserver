@@ -31,7 +31,7 @@
 <?php
 	ini_set("error_reporting", 1);
 	session_start();
-	include "koneksi.php";
+	require_once "koneksi.php";
 	$nodemand = $_GET['nodemand'];
 	require_once 'now.php';
 
@@ -49,10 +49,9 @@
 	$Item		= isset($_POST['item']) ? $_POST['item'] : '';
 	$Warna		= isset($_POST['warna']) ? $_POST['warna'] : '';
 	$Langganan	= isset($_POST['langganan']) ? $_POST['langganan'] : '';
-	$con1 = mysqli_connect("svr10", "dit", "4dm1n");
-	$db1 = mysqli_select_db($con1, "db_finishing") or die("Gagal Koneksi ke finishing");
-	$qryFin = mysqli_query($con1, "SELECT *,DATE_FORMAT(tgl_proses_out,'%d-%m-%Y') as tgl_o  FROM tbl_produksi WHERE demandno='$nodemand' ORDER BY id DESC LIMIT 1");
-	$dtFin = mysqli_fetch_array($qryFin);
+	
+	$qryFin = sqlsrv_query($con1, "SELECT TOP 1 *,CONVERT(VARCHAR(10), [tgl_proses_out], 105) AS tgl_o FROM db_finishing.tbl_produksi WHERE [demandno] = ? ORDER BY [id] DESC",[$nodemand]);
+	$dtFin = sqlsrv_fetch_array($qryFin, SQLSRV_FETCH_ASSOC);
 ?>
 <form class="form-horizontal" action="pages/detail_cetak_kr_erp.php" method="post" enctype="multipart/form-data" name="form1">
 	<div class="box box-info">

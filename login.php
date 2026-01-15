@@ -2,7 +2,7 @@
 ini_set("error_reporting", 1);
 session_start();
 //require_once "waktu.php";
-include"koneksi.php";
+include "koneksi.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -124,14 +124,12 @@ include"koneksi.php";
 <?php
 if($_POST){ //login user
   extract($_POST);
-  $username = mysqli_real_escape_string($con,$_POST['username']);
-  $password = mysqli_real_escape_string($con,$_POST['password']);
-  $sql=mysqli_query($con,"SELECT * FROM user_login WHERE user='$username' AND password='$password' AND dept = 'QC' LIMIT 1");
-  if(mysqli_num_rows($sql)>0)
+  $sql=sqlsrv_query($con,"SELECT TOP 1 * FROM db_qc.user_login WHERE [user]=? AND [password]=? AND [dept] = 'QC' ",[$username,$password]);
+  $r = sqlsrv_fetch_array($sql,SQLSRV_FETCH_ASSOC);
+  if($r)
   {
   $_SESSION['usrid1']=$username;
   $_SESSION['pasid1']=$password;
-  $r = mysqli_fetch_array($sql);
   $_SESSION['lvl_id1']=$r['level'];
   $_SESSION['status1']=$r['status'];
   $_SESSION['mamber1']=$r['mamber'];

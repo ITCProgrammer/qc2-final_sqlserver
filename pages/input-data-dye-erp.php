@@ -31,7 +31,7 @@
 <?php
 ini_set("error_reporting", 1);
 session_start();
-include "koneksi.php";
+require_once "koneksi.php";
 $nodemand = $_GET['nodemand'];
 require_once 'now.php';
 
@@ -43,14 +43,16 @@ require_once 'now.php';
   $Warna    = isset($_POST['warna']) ? $_POST['warna'] : '';
   $Langganan  = isset($_POST['langganan']) ? $_POST['langganan'] : '';
 
-  $con2 = mysqli_connect("10.0.0.10", "dit", "4dm1n", "db_dying");
   //$qryDye=mysqli_query($con2,"SELECT * FROM tbl_cocok_warna_dye WHERE nokk='$nokk' ORDER BY id DESC Limit 1");
   //$dtDye=mysqli_fetch_array($qryDye);
-  $qryDye1 = mysqli_query($con2, "SELECT * FROM db_dying.tbl_hasilcelup WHERE LPAD(nokk, 8, 0)='$dt_ITXVIEWKK[PRODUCTIONORDERCODE]' ORDER BY id DESC LIMIT 1");
-  $dtDyeing = mysqli_fetch_array($qryDye1);
-  $qryDye2 = mysqli_query($con2, "SELECT sum(a.rol) as jml_roll, sum(a.bruto) as jml_kg, a.no_mesin, a.proses FROM db_dying.tbl_schedule a
-  LEFT JOIN db_dying.tbl_montemp b on a.id = b.id_schedule WHERE a.nokk='$dtDyeing[nokk]' and a.status ='selesai' GROUP BY a.id ORDER BY a.id DESC LIMIT 1");
-  $dtSch = mysqli_fetch_array($qryDye2);
+  $qryDye1 = sqlsrv_query($con2, "SELECT TOP 1 *,CONVERT(VARCHAR(10), tgl_buat, 105) as tgl_buat FROM db_dying.tbl_hasilcelup WHERE right(replicate('0',8) + CONVERT(varchar,nokk),8) = ? ORDER BY id DESC",[$dt_ITXVIEWKK['PRODUCTIONORDERCODE']]);
+  $dtDyeing = sqlsrv_fetch_array($qryDye1,SQLSRV_FETCH_ASSOC);
+  $qryDye2 = sqlsrv_query($con2, "SELECT TOP 1 sum(a.rol) as jml_roll, sum(a.bruto) as jml_kg, max(a.no_mesin) no_mesin, max(a.proses) proses FROM db_dying.tbl_schedule a
+  LEFT JOIN db_dying.tbl_montemp b on a.id = b.id_schedule WHERE a.nokk=? and a.status ='selesai' GROUP BY a.id ORDER BY a.id DESC",[$dtDyeing['nokk']]);
+  $dtSch = sqlsrv_fetch_array($qryDye2,SQLSRV_FETCH_ASSOC);
+  // p($dt_ITXVIEWKK);
+  // p($dtDyeing);
+  // p($dtSch,1);
 ?>
 <form class="form-horizontal" action="pages/detail_cetak_dye_erp.php" method="post" enctype="multipart/form-data" name="form1">
   <div class="box box-info">
@@ -146,11 +148,11 @@ require_once 'now.php';
           <div class="col-sm-4">
             <div class="input-group date">
               <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
-              <input name="tgl_delivery" type="text" class="form-control pull-right" id="datepicker2" placeholder="0000-00-00" value="<?php if ($cek > 0) {
+              <input name="tgl_delivery" type="text" class="form-control pull-right" id="datepicker2" placeholder="00-00-0000" value="<?php if ($cek > 0) {
                                                                                                                                         echo $rcek['tgl_delivery'];
                                                                                                                                       } else {
                                                                                                                                         if ($dt_ITXVIEWKK['DELIVERYDATE'] != "") {
-                                                                                                                                          echo date('Y-m-d', strtotime($dt_ITXVIEWKK['DELIVERYDATE']));
+                                                                                                                                          echo date('d-m-Y', strtotime($dt_ITXVIEWKK['DELIVERYDATE']));
                                                                                                                                         }
                                                                                                                                       } ?>" />
             </div>
