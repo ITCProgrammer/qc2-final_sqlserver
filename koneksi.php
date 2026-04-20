@@ -28,7 +28,7 @@ date_default_timezone_set('Asia/Jakarta');
 //   }
 
 
-$hostname="10.0.0.21";
+$hostname="db2-db-prd.indotaichen.com";
 $database = "NOWPRD";
 $user = "db2admin";
 $passworddb2 = "Sunkam@24809";
@@ -42,7 +42,7 @@ else{
     exit("DB2 Connection failed");
     }
 
-        $server = "10.0.0.221"; 
+        $server = "sql-db-prd.indotaichen.com"; 
         $database = "db_qc";
         $username = "sa";
         $password = "Ind@taichen2024";
